@@ -6,10 +6,13 @@
 const ref = {
   input: document.querySelector('input'),
   textarea: document.querySelector('textarea'),
-  button: document.querySelector('button'),
   form: document.querySelector('.feedback-form'),
 };
 console.log(ref);
+
+const LOCALSTORAGE_KEY = 'feedback-form-state';
+
+outputForm();
 
 ref.form.addEventListener('submit', localInput);
 
@@ -20,12 +23,13 @@ function localInput(event) {
     message: `${ref.textarea.value}`,
   };
   console.log(value);
-  storage(value);
-  ref.input.value = '';
-  ref.textarea.value = '';
+  const localList = localStorage.getItem('LOCALSTORAGE_KEY');
+  const listData = localList ? JSON.parse(localList) : [];
+  localStorage.setItem('LOCALSTORAGE_KEY', JSON.stringify(value));
+  outputForm();
+  ref.form.reset();
 }
 
-function storage(value) {
-  const valueLocal = JSON.stringify(value);
-  localStorage.setItem('feedback-form-state', JSON.stringify(value));
+function outputForm() {
+  ref.form.value = localStorage.getItem(LOCALSTORAGE_KEY) || '';
 }
