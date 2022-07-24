@@ -1,10 +1,9 @@
 import Player from '@vimeo/player';
 import _throttle from 'lodash';
 
-const player = new Player('handstick', {
-  id: 'vimeo-player',
-  width: 640,
-});
+const refVideo = document.querySelector('#vimeo-player');
+
+const player = new Player(refVideo);
 
 const LOCALSTORAGE_KEY = 'videoplayer-current-time';
 
