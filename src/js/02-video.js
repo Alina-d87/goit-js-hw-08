@@ -1,4 +1,5 @@
 //import Player from '@vimeo/player';
+import _throttle from 'lodash';
 
 const refVideo = document.querySelector('#vimeo-player');
 console.log(refVideo);
@@ -6,26 +7,18 @@ console.log(refVideo);
 const player = new Vimeo.Player(refVideo);
 console.log(player);
 
-const onPlayer = player.on('timeupdate', function (time) {
-  const timeSecond = time.seconds;
-  console.log(timeSecond);
-  localStorage.setItem('videoplayer-current-time', timeSecond);
-  //  console.log(localStorage.getItem(timeSecond));
-});
+const LOCALSTORAGE_KEY = 'videoplayer-current-time';
 
 player
-  .setCurrentTime(onPlayer)
-  .then(function (seconds) {
-    // seconds = the actual time that the player seeked to
+  .on('timeupdate', function (time) {
+    const timeSecond = time.seconds;
+    console.log(timeSecond);
+    const saveTime = localStorage.setItem(LOCALSTORAGE_KEY, timeSecond);
   })
-  .catch(function (error) {
-    switch (error.name) {
-      case 'RangeError':
-        // the time was less than 0 or greater than the video’s duration
-        break;
+  .throttle(1000);
 
-      default:
-        // some other error occurred
-        break;
-    }
-  });
+const localTime = localStorage.getItem(LOCALSTORAGE_KEY);
+
+player.setCurrentTime(localTime).then(function (time) {
+  console.log('time', time);
+});
