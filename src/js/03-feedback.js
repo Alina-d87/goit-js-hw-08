@@ -1,4 +1,4 @@
-import { throttle } from 'lodash';
+import { _throttle } from 'lodash';
 
 const form = document.querySelector('.feedback-form');
 const input = document.querySelector('input');
@@ -8,9 +8,11 @@ const LOCALSTORAGE_KEY = 'feedback-form-state';
 
 let objectValue;
 
-input.addEventListener('input', throttle(localInput, 500));
-textarea.addEventListener('input', throttle(localInput, 500));
+input.addEventListener('input', throttleLocalInput);
+textarea.addEventListener('input', throttleLocalInput);
 form.addEventListener('submit', onSubmit);
+
+const throttleLocalInput = _.throttle(localInput, 500);
 
 objectParse();
 
