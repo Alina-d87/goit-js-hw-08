@@ -1,2 +1,0 @@
-const e={input:document.querySelector("input"),textarea:document.querySelector("textarea"),form:document.querySelector(".feedback-form")};console.log(e);function t(){e.form.value=localStorage.getItem("feedback-form-state")||""}t(),e.form.addEventListener("submit",(function(o){o.preventDefault();const a={email:`${e.input.value}`,message:`${e.textarea.value}`};console.log(a);const r=localStorage.getItem("LOCALSTORAGE_KEY");r&&JSON.parse(r);localStorage.setItem("LOCALSTORAGE_KEY",JSON.stringify(a)),t(),e.form.reset()}));
-//# sourceMappingURL=03-feedback.b863efee.js.map
