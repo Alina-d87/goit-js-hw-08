@@ -1,49 +1,44 @@
-import _throttle from 'lodash';
+import { _throttle } from 'lodash.throttle';
 
 const form = document.querySelector('.feedback-form');
 const input = document.querySelector('input');
 const textarea = document.querySelector('textarea');
+
 const LOCALSTORAGE_KEY = 'feedback-form-state';
-console.log(form.elements);
-outputForm();
 
-form.addEventListener('input', saveDataForm);
-textarea.addEventListener('submit', onTextInput);
+let objectValue;
 
-function saveDataForm(event) {
-  const dataForm = {
-    email: `${form.elements.target}`,
+input.addEventListener('input', _throttle(localInput, 500));
+textarea.addEventListener('input', _throttle(localInput, 500));
+form.addEventListener('submit', onSubmit);
+
+objectParse();
+
+function localInput() {
+  objectValue = {
+    email: `${input.value}`,
     message: `${textarea.value}`,
   };
-  console.log(dataForm);
-  localStorage.setItem(LOCALSTORAGE_KEY, dataForm);
-  outputForm();
+  localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(objectValue));
 }
 
-function outputForm() {
-  form.value = localStorage.getItem(LOCALSTORAGE_KEY) || '';
+function objectParse() {
+  const dataLocal = localStorage.getItem(LOCALSTORAGE_KEY) || '';
+  try {
+    const dataLocalParse = JSON.parse(dataLocal);
+    console.log(dataLocalParse);
+    if (dataLocal) {
+      input.value = dataLocalParse.email;
+      textarea.value = dataLocalParse.message;
+    }
+  } catch (error) {
+    console.log('parse ERROR!');
+  }
 }
 
-function onTextInput(event) {
+function onSubmit(event) {
   event.preventDefault();
-  event.currentTarget.reset();
+  objectParse();
   localStorage.removeItem(LOCALSTORAGE_KEY);
+  event.currentTarget.reset();
 }
-
-//outputForm();
-
-//ref.form.addEventListener('submit', localInput);
-
-//function localInput(event) {
-//  event.preventDefault();
-//  const value = {
-//    email: `${input.value}`,
-//    message: `${textarea.value}`,
-//  };
-//  console.log(value);
-//  const localList = localStorage.getItem('LOCALSTORAGE_KEY');
-//  const listData = localList ? JSON.parse(localList) : [];
-//  localStorage.setItem('LOCALSTORAGE_KEY', JSON.stringify(value));
-//  outputForm();
-//  ref.form.reset();
-//}
