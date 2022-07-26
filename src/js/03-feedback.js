@@ -8,8 +8,8 @@ const LOCALSTORAGE_KEY = 'feedback-form-state';
 
 let objectValue;
 
-input.addEventListener('input', _.throttle(localInput, 500));
-textarea.addEventListener('input', _.throttle(localInput, 500));
+input.addEventListener('input', throttle(localInput, 500));
+textarea.addEventListener('input', throttle(localInput, 500));
 form.addEventListener('submit', onSubmit);
 
 objectParse();
