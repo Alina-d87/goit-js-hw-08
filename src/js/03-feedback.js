@@ -28,8 +28,8 @@ function objectParse() {
     const dataLocalParse = JSON.parse(dataLocal);
     console.log(dataLocalParse);
     if (dataLocal) {
-      input.value = dataLocalParse.email || ''.email;
-      textarea.value = dataLocalParse.message || ''.message;
+      input.value = dataLocalParse.email || '';
+      textarea.value = dataLocalParse.message || '';
       objectValue = {
         email: input.value,
         message: textarea.value,
@@ -43,6 +43,6 @@ function objectParse() {
 function onSubmit(event) {
   event.preventDefault();
   objectParse();
-  //localStorage.removeItem(LOCALSTORAGE_KEY);
+  localStorage.removeItem(LOCALSTORAGE_KEY);
   form.reset();
 }

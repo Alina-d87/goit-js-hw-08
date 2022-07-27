@@ -12,7 +12,6 @@ player.on('timeupdate', function (time) {
   console.log(timeSecond);
   const saveTime = localStorage.setItem(LOCALSTORAGE_KEY, timeSecond);
   const throobleTime = throttle(saveTime, 1000);
-  console.log(throobleTime);
 });
 
 const localTime = localStorage.getItem(LOCALSTORAGE_KEY) || '';
