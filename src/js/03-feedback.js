@@ -5,13 +5,13 @@ const input = document.querySelector('input');
 const textarea = document.querySelector('textarea');
 
 const LOCALSTORAGE_KEY = 'feedback-form-state';
-
+const throttleLocalInput = throttle(localInput, 500);
 let objectValue;
 
 objectParse();
 
-input.addEventListener('input', throttle(localInput, 500));
-textarea.addEventListener('input', throttle(localInput, 500));
+input.addEventListener('input', throttleLocalInput);
+textarea.addEventListener('input', throttleLocalInput);
 form.addEventListener('submit', onSubmit);
 
 function localInput() {
